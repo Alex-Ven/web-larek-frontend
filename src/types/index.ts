@@ -25,24 +25,27 @@ export interface IUserInfo {
 	phone: string;
 }
 
+
+//Интерфейс, описывающий поля форм заказа товара и объеденяющий поля
+
 export type IDeliveryForm = Pick<IUserInfo, 'payment' | 'address'>;
-export type IOrderForm = Pick<IUserInfo, 'email' | 'phone'>;
+export type IContactsForm = Pick<IUserInfo, 'email' | 'phone'>;
+export type IOrderForm = IDeliveryForm & IContactsForm;
 
+//Интерфейс описывающий оформление заказа
 
-//Интерфейс, описывающий поля заказа товара и объеденяющий поля
-
-export interface IOrder {
+export interface IOrder extends IOrderForm {
 	items: string[];
 	total: number;
 }
 
-
-//Интерфейс описывающий оформление заказа
+//Интерфейс описывающий результат оформления заказа
 
 export interface IOrderResult {
 	id: string;
 	total: number;
 }
+export type ISuccess = Pick<IOrderResult, 'total'>;
 
 
 //Тип, описывающий ошибки валидации форм
@@ -52,8 +55,8 @@ export type FormErrors = Partial<Record<keyof IOrder, string>>;
 //Интерфейс, для хранения актуального состояния приложения
 
 export interface IAppState {
-	catalog: IProductItem[];
-	basket: string[];
+	catalog: ICatalogProduct[];
+	basket: IBasketProduct[];
 	preview: string | null;
 	order: IOrder | null;
 	orderResponse: IOrderResult | null;

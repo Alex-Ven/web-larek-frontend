@@ -1,7 +1,30 @@
 import { IOrder, IOrderResult, IProductItem } from "../types";
+import { Api, ApiListResponse } from './base/api';
 
 export interface ILarekApi {
   getProductItems: () => Promise<IProductItem[]>;
-  getProduct: (id: string) => Promise<IProductItem>;
-  orderProducts: (order: IOrder) => Promise<IOrderResult>
+  order: (order: IOrder) => Promise<IOrderResult>
+}
+
+export class LarekApi extends Api implements ILarekApi {
+  readonly cdn: string;
+
+  constructor(cdn: string, baseUrl: string, options?: RequestInit) {
+    super(baseUrl, options);
+    this.cdn = cdn;
+  }
+
+  getProductItems(): Promise<IProductItem[]> {
+    return this.get('/product').then((data: ApiListResponse<IProductItem>) =>
+        data.items.map((item) => ({
+            ...item,
+            image: this.cdn + item.image
+        }))
+    );
+}
+
+  order(order: IOrder): Promise<IOrderResult> {
+    return this.post(`/order`, order)
+    .then((data: IOrderResult) => data)
+  }
 }
