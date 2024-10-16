@@ -71,9 +71,9 @@ interface IUserInfo {
 	email: string;
 	phone: string;
 	}
-	```
+```
 
-//Интерфейс, описывающий поля форм заказа товара и объеденяющий поля
+Интерфейс, описывающий поля форм заказа товара и объеденяющий поля
 
 ```
 	type IDeliveryForm = Pick<IUserInfo, 'payment' | 'address'>;
@@ -99,13 +99,13 @@ interface IOrderResult {
 	total: number;
 }
 ```
-//Тип, описывающий ошибки валидации форм
+Тип, описывающий ошибки валидации форм
 
 ```
 type FormErrors = Partial<Record<keyof IOrder, string>>;
 ```
 
-//Интерфейс, для хранения актуального состояния приложения
+Интерфейс, для хранения актуального состояния приложения
 
 ```
 interface IAppState {
