@@ -1,21 +1,18 @@
 import { Model } from './base/model';
-import { IAppState, IBasketProduct, ICatalogProduct, IOrder, FormErrors, IProductItem } from '../types';
+import {
+	IAppState,
+	IBasketProduct,
+	ICatalogProduct,
+	IOrder,
+	FormErrors,
+} from '../types';
 import { ICard } from './Card';
 
 export interface CatalogChangeEvent {
 	products: ICatalogProduct[];
 }
 
-export class ProductItem extends Model<IProductItem> {
-	id: string;
-	title: string;
-	image: string;
-	category: string;
-	description: string;
-	price: number | null;
-}
-
- export class AppState extends Model<IAppState> {
+export class AppState extends Model<IAppState> {
 	basket: IBasketProduct[] = [];
 	catalog: ICatalogProduct[];
 	loading: boolean;
@@ -26,7 +23,7 @@ export class ProductItem extends Model<IProductItem> {
 		phone: '',
 		total: 0,
 		items: [],
-	}
+	};
 
 	preview: string | null;
 	formErrors: FormErrors = {};
@@ -65,7 +62,6 @@ export class ProductItem extends Model<IProductItem> {
 		this.emitChanges('preview:changed', item);
 	}
 
-
 	validateOrderForm() {
 		const errors: typeof this.formErrors = {};
 
@@ -93,8 +89,11 @@ export class ProductItem extends Model<IProductItem> {
 		else if (field === 'items') {
 			this.order[field].push(value as string);
 		} else this.order[field] = value as string;
-
 		if (this.validateOrderForm()) this.events.emit('order:success', this.order);
 	}
-}
 
+	contactsReset() {
+		this.order.email = '';
+		this.order.phone = '';
+	}
+}
