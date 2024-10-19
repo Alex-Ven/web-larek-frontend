@@ -194,6 +194,7 @@ interface IAppState {
 - validateOrderForm() - валидация полей со способом оплаты и контактов
 - setPreview(item: ICard) - показ товаров
 - setOrderField(field: keyof IOrder, value: string | number) - устанавливает значение поля заказа для проверки валидности формы контактов
+- contactsReset() - сбросе формы контактных данных, при повторном оформлении форм заказа
 
 
 ### Классы представления
